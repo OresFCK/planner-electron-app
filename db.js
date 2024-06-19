@@ -1,16 +1,11 @@
-const sqlite3 = require('sqlite3').verbose();
+// db.js
+const sequelize = require('./database');
 
-// Create a new SQLite database
-const db = new sqlite3.Database('./mydatabase.db'); // Replace with your database file path
+require('./models/User');
 
-// Create users table if not exists
-db.serialize(() => {
-  db.run(`CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
-    age INTEGER
-  )`);
-});
+sequelize.sync()
+  .then(() => {
+    console.log('Database & tables created!');
+  });
 
-// Export database instance for use in other modules
-module.exports = db;
+module.exports = sequelize;

@@ -6,14 +6,32 @@ function App({ api }) {
   const [responseMessage, setResponseMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = async ({ name, age }) => {
+  const handleSubmit = async ({
+    imie,
+    nazwisko,
+    email,
+    haslo,
+    iloscWykonanychTaskow,
+    czyGra,
+    zloto,
+    czyPremium,
+  }) => {
     try {
       const response = await fetch('http://localhost:3001/api/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, age }),
+        body: JSON.stringify({
+          imie,
+          nazwisko,
+          email,
+          haslo,
+          iloscWykonanychTaskow,
+          czyGra,
+          zloto,
+          czyPremium,
+        }),
       });
 
       if (!response.ok) {
@@ -21,7 +39,7 @@ function App({ api }) {
       }
 
       const data = await response.json();
-      setResponseMessage(`User created with name ${data.name}`);
+      setResponseMessage(`User created with email ${data.email}`);
     } catch (error) {
       setErrorMessage('Error creating user');
     }
